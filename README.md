@@ -16,8 +16,9 @@ This game is in the very early stage, Pre-Alpha, and can get any contribution I 
 
 
 ## How to contribute
-There are two ways to edit the source and compile to test, the easiest one is by using the Eclipse IDE. Here is how:
+There are two ways to edit the source and compile to test.
 
+### Using Eclipse IDE (easiest)
 * Install and open Eclipse
 	* *Make sure you have the JDK*
 * Clone the repo and put it somewhere you will remember
@@ -25,5 +26,7 @@ There are two ways to edit the source and compile to test, the easiest one is by
 	* Make sure you import the **Clik-master** folder after unzipping
 * You can now edit and build the source, to make a pull request, press *CTRL + SHIFT + 3* to start the staging processes.
 
-To use another IDE, import the java files from *Clik/src/clik* and add the **core.jar** file from the *Clik* folder as a library.
+
+## Using seperate IDE
+To use another IDE, import the java files from *Clik/src/clik* and add the **core.jar** file from the *Clik* folder as a library. You can then use javac to compile
 
