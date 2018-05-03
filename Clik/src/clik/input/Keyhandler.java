@@ -5,9 +5,10 @@ import clik.main.Main;
 import clik.obj.Note;
 public class Keyhandler {
 	PApplet p;
-	
+	public static SoundHandler s;
 	public Keyhandler(PApplet p) {
 		this.p = p;
+		this.s = new SoundHandler(p);
 	}
 	public void checkKey(char key) {
 		if(key=='d') {
@@ -16,8 +17,12 @@ public class Keyhandler {
 				if (note.y <=600&&note.y>=500&&(int)note.pos==0) {
 					Main.notes.remove(note);
 					Main.score++;
+					s.playHitSound();
 					break;
 				} else {
+					if(Main.score>=10) {
+						s.playComboBreak();
+					}
 					Main.score = 0;
 				}
 			}
@@ -28,8 +33,12 @@ public class Keyhandler {
 				if (note.y <=600&&note.y>=500&&(int)note.pos==1) {
 					Main.notes.remove(note);
 					Main.score++;
+					s.playHitSound();
 					break;
 				} else {
+					if(Main.score>=10) {
+						s.playComboBreak();
+					}
 					Main.score = 0;
 				}
 			}
@@ -40,8 +49,12 @@ public class Keyhandler {
 				if (note.y <=600&&note.y>=500&&(int)note.pos==2) {
 					Main.notes.remove(note);
 					Main.score++;
+					s.playHitSound();
 					break;
 				} else {
+					if(Main.score>=10) {
+						s.playComboBreak();
+					}
 					Main.score = 0;
 				}
 			}
@@ -52,8 +65,12 @@ public class Keyhandler {
 				if (note.y <=600&&note.y>=500&&(int)note.pos==3) {
 					Main.notes.remove(note);
 					Main.score++;
+					s.playHitSound();
 					break;
 				} else {
+					if(Main.score>=10) {
+						s.playComboBreak();
+					}
 					Main.score = 0;
 				}
 			}

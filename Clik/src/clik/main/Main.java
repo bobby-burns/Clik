@@ -94,6 +94,9 @@ public class Main extends PApplet{
 			
 			if(note.y >= 600) {
 				toRemove = note;
+				if(score>=10) {
+					Keyhandler.s.playComboBreak();
+				}
 				score = 0;
 				thread("deleteNote");
 			}
