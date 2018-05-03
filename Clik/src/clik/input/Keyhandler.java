@@ -5,9 +5,10 @@ import clik.main.Main;
 import clik.obj.Note;
 public class Keyhandler {
 	PApplet p;
-	
+	public static SoundHandler s;
 	public Keyhandler(PApplet p) {
 		this.p = p;
+		this.s = new SoundHandler(p);
 	}
 	//Process note key values
 	public void checkKey(char key) {
@@ -21,8 +22,12 @@ public class Keyhandler {
 					//Remove key and increase score
 					Main.notes.remove(note);
 					Main.score++;
+					s.playHitSound();
 					break;
 				} else {
+					if (Main.score>= 10) {
+						s.playComboBreak();
+					}
 					//Reset score to 0
 					Main.score = 0;
 				}
@@ -38,8 +43,12 @@ public class Keyhandler {
 					//Remove key and increase score
 					Main.notes.remove(note);
 					Main.score++;
+					s.playHitSound();
 					break;
 				} else {
+					if (Main.score>= 10) {
+						s.playComboBreak();
+					}
 					//Reset score to 0
 					Main.score = 0;
 				}
@@ -55,8 +64,12 @@ public class Keyhandler {
 					//Remove key and increase score
 					Main.notes.remove(note);
 					Main.score++;
+					s.playHitSound();
 					break;
 				} else {
+					if (Main.score>= 10) {
+						s.playComboBreak();
+					}
 					//Reset score to 0
 					Main.score = 0;
 				}
@@ -72,8 +85,12 @@ public class Keyhandler {
 					//Remove key and increase score
 					Main.notes.remove(note);
 					Main.score++;
+					s.playHitSound();
 					break;
 				} else {
+					if (Main.score>= 10) {
+						s.playComboBreak();
+					}
 					//Reset score to 0
 					Main.score = 0;
 				}
