@@ -10,8 +10,8 @@ import processing.core.*;
 
 public class Main extends PApplet{
 	
-	//Maximum FPS, does not affect the game unless it goes below 120, can be set to anything above 120 (higher = better)
-	public static final int FPS = 360;
+	//Maximum FPS, does not affect the game unless it goes below 120, can be set to anything above 120 (higher = better, don't go above 200)
+	public static final int FPS = 144;
 	
 	//Gamespeed, the framerate at which the game runs on
 	public static final int GAMESPEED = 120;
@@ -95,7 +95,7 @@ public class Main extends PApplet{
 			if(note.y >= 600) {
 				toRemove = note;
 				if(score>=10) {
-					Keyhandler.s.playComboBreak();
+					
 				}
 				score = 0;
 				thread("deleteNote");
