@@ -10,9 +10,10 @@ Current Version: Pre-Alpha 00.1
 This game is in the very early stage, Pre-Alpha, and can get any contribution I can get. I am not an experienced programmer at all and would love any help I can get. Contribution priority is what I'm looking for help (in order) at the current time.
 
 ### Contribution Priority:
-1. Main Gameplay (features, code in general)
-2. Optimization
-3. Documentation
+1. Is their a better way of doing things (logic, more optimized, OOP, expansive)
+2. Main Gameplay (features, code in general)
+3. Optimization
+4. Documentation
 
 
 ## How to contribute
