@@ -31,3 +31,7 @@ There are two ways to edit the source and compile to test.
 ## Using seperate IDE
 To use another IDE, import the java files from *Clik/src/clik* and add the **core.jar** file from the *Clik* folder as a library. You can then use javac to compile
 
+
+## Copyright
+Copyright <2018> Bobby Burns under MIT License
+https://opensource.org/licenses/MIT
