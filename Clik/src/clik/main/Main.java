@@ -1,8 +1,11 @@
 package clik.main;
 
+import java.awt.print.Printable;
 import java.util.ArrayList;
 import clik.input.Button;
 import clik.input.Keyhandler;
+import clik.input.SongLoader;
+import clik.input.SoundHandler;
 import clik.obj.Note;
 import clik.obj.Receptor;
 import processing.core.*;
@@ -32,13 +35,17 @@ public class Main extends PApplet{
 	private Note toRemove;
 	public static int score = 0;
 	float deltadiv,startTime;
+	public static float songStartTime;
+	public static boolean playsong = false;
 
 	//obj inits
 	public static Receptor rec1,rec2,rec3,rec4;
 	Keyhandler handler;
+	SongLoader loader;
 	Button b1;
 	Button b2;
 	Button b3;
+	Button b4;
 
 	
 	public static void main(String[] args) {
@@ -64,15 +71,18 @@ public class Main extends PApplet{
 		handler = new Keyhandler(this);
 		
 		//Custom made button class,
-		b1 = new Button(this,420,80,60,30,"Easy",15,20,500); 
+		b1 = new Button(this,420,80,60,30,"Easy",15,20,500,null); 
 		//PARAMS: PApplet parent, x, y, width, height, label, labelOffsetX, labelOffsetY, difficulty (for no offset or difficulty use null)
 		
-		b2 = new Button(this,420,120,60,30,"Hard",15,20,300);
-		b3 = new Button(this,420,160,60,30,"Insane",10,20,300);
+		b2 = new Button(this,420,120,60,30,"Hard",15,20,300,null);
+		b3 = new Button(this,420,160,60,30,"Insane",10,20,300,null);
+		b4 = new Button(this,420,200,60,30,"Song",15,20,null,true);
 		
+		loader = new SongLoader(this);
 		//start note generation
 		thread("gen");
 		startTime = millis();
+		songStartTime = millis();
 
 
 		
@@ -109,7 +119,7 @@ public class Main extends PApplet{
 		rec1.display();rec2.display();rec3.display();rec4.display();
 		
 		//display buttons
-		b1.Display();b2.Display();b3.Display();
+		b1.Display();b2.Display();b3.Display();b4.Display();
 		
 		//display text
 		textSize(24);
@@ -133,11 +143,28 @@ public class Main extends PApplet{
 		handler.checkRelease(key);
 	}
 	public void gen() {
+		int curindex = 0;
 		while(genstart) {
-			delay(difficulty);
-			notes.add(new Note(this, random(0,4)).getNote());
+			//THIS NEEDS IMPROVEMENT, ITS VERY MESSY
+			if(playsong) {
+				try {
+					if (Float.parseFloat(split(SongLoader.file[curindex],",")[0])>=(millis()-songStartTime) - 10 && Float.parseFloat(split(SongLoader.file[curindex],",")[0])<=(millis()-songStartTime) + 10)
+					{
+						float pos = Float.parseFloat(split(SongLoader.file[curindex],",")[1]);
+						notes.add(new Note(this, pos).getNote());
+						curindex++;
+					}
+				} catch(ArrayIndexOutOfBoundsException e) {
+				System.out.println("Song has ended");
+				playsong = false;
+			}
+		}
+		if(!playsong) {
+		delay(difficulty);
+		notes.add(new Note(this, random(0,4)).getNote());
 		}
 	}
+}
 	public void deleteNote() {
 		notes.remove(toRemove);
 	}
