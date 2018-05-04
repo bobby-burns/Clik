@@ -3,6 +3,8 @@ A guitar hero like game created as a side project by Bobby burns
 
 Current Version: Pre-Alpha 00.1
 
+Wouldnt reccomend clicking the "Song" button, its in testing right now
+
 :warning:**WARNING! This Version is in Pre-Alpha, the game is in no way finished and is VERY buggy** :warning:
 
 ## Contribute
