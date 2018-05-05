@@ -1,7 +1,8 @@
 package clik.main;
 
-import java.awt.print.Printable;
 import java.util.ArrayList;
+
+
 import clik.input.Button;
 import clik.input.Keyhandler;
 import clik.input.SongLoader;
@@ -37,6 +38,8 @@ public class Main extends PApplet{
 	float deltadiv,startTime;
 	public static float songStartTime;
 	public static boolean playsong = false;
+	public static Button selectedButton;
+	public static int comboTextSize = 24;
 
 	//obj inits
 	public static Receptor rec1,rec2,rec3,rec4;
@@ -66,6 +69,9 @@ public class Main extends PApplet{
 		textAlign(CENTER);
 		text("Loading...",width/2,height/2);
 		textAlign(CORNER);
+		//set title
+		surface.setTitle("Clik");
+		
 		//asign obj's
 		rec1 = new Receptor(this, 0);rec2 = new Receptor(this, 100);rec3 = new Receptor(this, 200);rec4 = new Receptor(this, 300);
 		handler = new Keyhandler(this);
@@ -75,10 +81,14 @@ public class Main extends PApplet{
 		//PARAMS: PApplet parent, x, y, width, height, label, labelOffsetX, labelOffsetY, difficulty (for no offset or difficulty use null)
 		
 		b2 = new Button(this,420,120,60,30,"Hard",15,20,300,null);
-		b3 = new Button(this,420,160,60,30,"Insane",10,20,300,null);
+		b3 = new Button(this,420,160,60,30,"Insane",10,20,150,null);
 		b4 = new Button(this,420,200,60,30,"Song",15,20,null,true);
+		selectedButton = b3;
 		
+		//song loader
 		loader = new SongLoader(this);
+
+		
 		//start note generation
 		thread("gen");
 		startTime = millis();
@@ -118,11 +128,14 @@ public class Main extends PApplet{
 		//display receptor's
 		rec1.display();rec2.display();rec3.display();rec4.display();
 		
+		//highlight current selected button
+		selectedButton.setColor(color(255));
+		
 		//display buttons
 		b1.Display();b2.Display();b3.Display();b4.Display();
 		
 		//display text
-		textSize(24);
+		textSize(comboTextSize);
 		textAlign(CENTER);
 		text("Combo: "+score,220,200);
 		textAlign(CORNER);
@@ -130,7 +143,9 @@ public class Main extends PApplet{
 		text("Debug Stats:", 420, 15);
 		text("Array Size: "+notes.size(),420,30);
 		text("FPS: "+(int)frameRate,420,45);
-		text("Delta: "+String.valueOf(delta).substring(0, 5),420,60);
+		String delt;
+		try {delt = String.valueOf(delta).substring(0, 5);} catch(StringIndexOutOfBoundsException e) {delt = String.valueOf(delta);}
+		text("Delta: "+ delt,420,60);
 		
 		
 	}
@@ -151,12 +166,19 @@ public class Main extends PApplet{
 					if (Float.parseFloat(split(SongLoader.file[curindex],",")[0])>=(millis()-songStartTime) - 10 && Float.parseFloat(split(SongLoader.file[curindex],",")[0])<=(millis()-songStartTime) + 10)
 					{
 						float pos = Float.parseFloat(split(SongLoader.file[curindex],",")[1]);
+						if (pos > 3) {
+							System.out.println("Position out of bounds, skipping note");
+							curindex++;
+						} else {
 						notes.add(new Note(this, pos).getNote());
 						curindex++;
 					}
+				}
 				} catch(ArrayIndexOutOfBoundsException e) {
 				System.out.println("Song has ended");
 				playsong = false;
+				curindex = 0;
+				selectedButton = b3;
 			}
 		}
 		if(!playsong) {

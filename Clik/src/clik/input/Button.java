@@ -15,6 +15,7 @@ public class Button {
 	int offsetX;
 	int offsetY;
 	int difficulty;
+	int curColor;
 	Boolean song;
 	String label;
 	
@@ -29,11 +30,13 @@ public class Button {
 		this.offsetY = offY != null ? offY : 0; 
 		this.difficulty = difficulty != null ? difficulty : Main.difficulty;
 		this.song = song != null ? song : false;
+		this.curColor = parent.color(155);
 		p.registerMethod("mouseEvent", this);
 	}
 	
 	public void Display() {
-		p.fill(150);
+		if(Main.selectedButton != this) this.curColor = 150;
+		p.fill(curColor);
 		p.rect(x, y, w, h);
 		p.fill(0);
 		p.text(this.label,x+offsetX,y+offsetY);
@@ -43,16 +46,19 @@ public class Button {
 		
 		//checks if the user clicked inside the button contraints
 		if (e.getX()>=this.x&&e.getX()<=this.x+this.w&&e.getY()>=this.y&&e.getY()<=this.y+this.h&&e.getButton()==p.LEFT) {
+			Main.selectedButton = this;
 			if (song) {
 				Main.songStartTime = p.millis();
 				Main.playsong = true;
 			}
 			Main.difficulty = difficulty;
-		} else if (e.getX()>=this.x&&e.getX()<=this.x+this.w&&e.getY()>=this.y&&e.getY()<=this.y+this.h) {
-			p.cursor(p.HAND);
 		}
+
 			
 
+	}
+	public void setColor(int color) {
+		this.curColor = color;
 	}
 }
 
