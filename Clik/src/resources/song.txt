@@ -1,3 +1,5 @@
+// First input is milliseconds from start of song, second is the position of note (0-3), new line is a new note, use // for comments. nonprintable
+// Use keyword "nonprintable" to have the comment not print to the console.
 1000,0
 1100,1
 1200,2
@@ -9,3 +11,27 @@
 1800,0
 1900,1
 2000,2
+2100,3
+2200,0
+2300,1
+2400,2
+2500,3
+2600,0
+2700,1
+2800,2
+2900,3
+3000,0
+3100,1
+3200,2
+3300,3
+3400,0
+3500,3
+3600,0
+3700,3
+3800,0
+3900,3
+4000,0
+4100,3
+4200,0
+4300,3
+4400,0

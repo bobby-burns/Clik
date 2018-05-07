@@ -159,21 +159,41 @@ public class Main extends PApplet{
 	}
 	public void gen() {
 		int curindex = 0;
+		int lastindex = 0;
 		while(genstart) {
 			//THIS NEEDS IMPROVEMENT, ITS VERY MESSY
 			if(playsong) {
 				try {
-					if (Float.parseFloat(split(SongLoader.file[curindex],",")[0])>=(millis()-songStartTime) - 10 && Float.parseFloat(split(SongLoader.file[curindex],",")[0])<=(millis()-songStartTime) + 10)
-					{
-						float pos = Float.parseFloat(split(SongLoader.file[curindex],",")[1]);
-						if (pos > 3) {
-							System.out.println("Position out of bounds, skipping note");
-							curindex++;
-						} else {
-						notes.add(new Note(this, pos).getNote());
+					if(!SongLoader.file[curindex].contains("//")) {
+					//takes the first param from song file (millis from start of song) and adds a padding of 10 miliseconds  (up/down) to place a note
+					if(Float.parseFloat(split(SongLoader.file[curindex],",")[0]) < (Float.parseFloat(split(SongLoader.file[lastindex],",")[0]))){
+						System.out.print("Back in time error: skipping note");
+						lastindex = curindex;
 						curindex++;
 					}
-				}
+					if (Float.parseFloat(split(SongLoader.file[curindex],",")[0])>=(millis()-songStartTime) - 10 && Float.parseFloat(split(SongLoader.file[curindex],",")[0])<=(millis()-songStartTime) + 10)
+					{
+						
+							float pos = Float.parseFloat(split(SongLoader.file[curindex],",")[1]);
+							if (pos > 3) {
+								System.out.println("Position out of bounds, skipping note");
+								lastindex = curindex;
+								curindex++;
+							} else {
+								notes.add(new Note(this, pos).getNote());
+								lastindex = curindex;
+								curindex++;
+							}
+						}
+					} else {
+						if(!SongLoader.file[curindex].contains("nonprintable")) {
+							System.out.println("Comment detected: "+ SongLoader.file[lastindex].replaceAll("//", ""));
+						}
+						lastindex = curindex;
+						curindex++;
+						
+							
+					}
 				} catch(ArrayIndexOutOfBoundsException e) {
 				System.out.println("Song has ended");
 				playsong = false;
