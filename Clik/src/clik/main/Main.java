@@ -160,18 +160,31 @@ public class Main extends PApplet{
 	public void gen() {
 		int curindex = 0;
 		int lastindex = 0;
+		boolean comment = false;
 		while(genstart) {
 			//THIS NEEDS IMPROVEMENT, ITS VERY MESSY
 			if(playsong) {
 				try {
-					if(!SongLoader.file[curindex].contains("//")) {
-					//takes the first param from song file (millis from start of song) and adds a padding of 10 miliseconds  (up/down) to place a note
-					if(Float.parseFloat(split(SongLoader.file[curindex],",")[0]) < (Float.parseFloat(split(SongLoader.file[lastindex],",")[0]))){
-						System.out.print("Back in time error: skipping note");
+					if(SongLoader.file[curindex].contains("//")) {
+						if(!SongLoader.file[curindex].contains("nonprintable")) {
+							System.out.println("Comment detected: "+ SongLoader.file[lastindex].replaceAll("//", ""));
+						}
 						lastindex = curindex;
 						curindex++;
+						comment = true;
+					} else {
+						comment = false;
 					}
-					if (Float.parseFloat(split(SongLoader.file[curindex],",")[0])>=(millis()-songStartTime) - 10 && Float.parseFloat(split(SongLoader.file[curindex],",")[0])<=(millis()-songStartTime) + 10)
+						if(!SongLoader.file[lastindex].contains("//")) {
+						if(!comment&&Float.parseFloat(split(SongLoader.file[curindex],",")[0]) < (Float.parseFloat(split(SongLoader.file[lastindex],",")[0]))){
+							System.out.println("Back in time error: skipping note");
+							lastindex = curindex;
+							curindex++;
+							
+						}
+						}
+					//takes the first param from song file (millis from start of song) and adds a padding of 10 miliseconds  (up/down) to place a note
+					if (!comment&&Float.parseFloat(split(SongLoader.file[curindex],",")[0])>=(millis()-songStartTime) - 10 && Float.parseFloat(split(SongLoader.file[curindex],",")[0])<=(millis()-songStartTime) + 10)
 					{
 						
 							float pos = Float.parseFloat(split(SongLoader.file[curindex],",")[1]);
@@ -185,15 +198,7 @@ public class Main extends PApplet{
 								curindex++;
 							}
 						}
-					} else {
-						if(!SongLoader.file[curindex].contains("nonprintable")) {
-							System.out.println("Comment detected: "+ SongLoader.file[lastindex].replaceAll("//", ""));
-						}
-						lastindex = curindex;
-						curindex++;
-						
-							
-					}
+					 
 				} catch(ArrayIndexOutOfBoundsException e) {
 				System.out.println("Song has ended");
 				playsong = false;
