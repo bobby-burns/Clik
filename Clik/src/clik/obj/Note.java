@@ -11,10 +11,12 @@ public class Note {
 	PApplet p;
 	public int y;
 	public float pos;
+	public float spawned;
 	public Note(PApplet parent,float pos) {
 		this.p = parent;
 		this.pos = pos;
 		y = 0;
+		this.spawned = p.millis();
 	}
 	
 	public void create() {

@@ -165,6 +165,7 @@ public class Main extends PApplet{
 			//THIS NEEDS IMPROVEMENT, ITS VERY MESSY
 			if(playsong) {
 				try {
+					
 					if(SongLoader.file[curindex].contains("//")) {
 						if(!SongLoader.file[curindex].contains("nonprintable")) {
 							System.out.println("Comment detected: "+ SongLoader.file[lastindex].replaceAll("//", ""));
@@ -176,24 +177,31 @@ public class Main extends PApplet{
 						comment = false;
 					}
 						if(!SongLoader.file[lastindex].contains("//")) {
-						if(!comment&&Float.parseFloat(split(SongLoader.file[curindex],",")[0]) < (Float.parseFloat(split(SongLoader.file[lastindex],",")[0]))){
+						if(!comment&&Float.parseFloat(split(SongLoader.file[curindex],",")[2]) < (Float.parseFloat(split(SongLoader.file[lastindex],",")[2]))){
 							System.out.println("Back in time error: skipping note");
 							lastindex = curindex;
 							curindex++;
 							
 						}
 						}
-					//takes the first param from song file (millis from start of song) and adds a padding of 10 miliseconds  (up/down) to place a note
-					if (!comment&&Float.parseFloat(split(SongLoader.file[curindex],",")[0])>=(millis()-songStartTime) - 10 && Float.parseFloat(split(SongLoader.file[curindex],",")[0])<=(millis()-songStartTime) + 10)
+						//System.out.println("Timing: "+ );
+						if(!comment&&(Float.parseFloat(split(SongLoader.file[2],",")[2])) + 830>=(millis()-songStartTime) - 10 && (Float.parseFloat(split(SongLoader.file[2],",")[2])) + 830<=(millis()-songStartTime) + 10) {
+							Keyhandler.s.playGameSound();
+						}
+					//takes the first param from song file (millis from start of song) and adds a padding of 10 milliseconds  (up/down) to place a note
+					if (!comment&&Float.parseFloat(split(SongLoader.file[curindex],",")[2])>=(millis()-songStartTime) - 10 && Float.parseFloat(split(SongLoader.file[curindex],",")[2])<=(millis()-songStartTime) + 10)
 					{
-						
-							float pos = Float.parseFloat(split(SongLoader.file[curindex],",")[1]);
-							if (pos > 3) {
+							System.out.println("Note place");
+							double pos = Math.floor(1 + Float.parseFloat(split(SongLoader.file[curindex],",")[0]) / (512 / 4));
+							if ((pos - 1) > 3) {
 								System.out.println("Position out of bounds, skipping note");
+								System.out.println("Pos: "+pos);
 								lastindex = curindex;
 								curindex++;
 							} else {
-								notes.add(new Note(this, pos).getNote());
+								notes.add(new Note(this, ((float)pos) - 1).getNote());
+								System.out.println("Time: "+Float.parseFloat(split(SongLoader.file[curindex],",")[2]));
+								System.out.println("Pos: "+pos);
 								lastindex = curindex;
 								curindex++;
 							}
