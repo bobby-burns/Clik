@@ -16,6 +16,7 @@ public class Keyhandler {
 		if(key=='d') {
 			//Set the color of the first key to white
 			Main.rec1.setColor(p.color(255,255,255));
+			// TODO: REMEMBER TO SORRUND THESE WITH TRY CATCH
 			for (Note note : Main.notes) {
 				//Check if the note is the correct position in first quadrant
 				if (note.y <=600&&note.y>=500&&(int)note.pos==0) {

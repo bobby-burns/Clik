@@ -32,7 +32,7 @@ public class Main extends PApplet{
 	//other game variables
 	public static int difficulty = 150;
 	public static int speed = 7;
-	public static boolean genstart = true;;
+	public static boolean genstart = true,songIsPlaying = false;
 	private Note toRemove;
 	public static int score = 0;
 	float deltadiv,startTime;
@@ -185,23 +185,25 @@ public class Main extends PApplet{
 						}
 						}
 						//System.out.println("Timing: "+ );
-						if(!comment&&(Float.parseFloat(split(SongLoader.file[2],",")[2])) + 830>=(millis()-songStartTime) - 10 && (Float.parseFloat(split(SongLoader.file[2],",")[2])) + 830<=(millis()-songStartTime) + 10) {
-							Keyhandler.s.playGameSound();
-						}
+						//if(!songIsPlaying&&!comment&&(Float.parseFloat(split(SongLoader.file[2],",")[2])) + 830>=(millis()-songStartTime)-10&&(Float.parseFloat(split(SongLoader.file[2],",")[2])) + 830<=(millis()-songStartTime) + 10) {
+							//Keyhandler.s.playGameSound();
+							//songIsPlaying = true;
+						//}
+					if(!songIsPlaying){
+						delay(830);
+						Keyhandler.s.playGameSound();
+						songIsPlaying = true;
+					}
 					//takes the first param from song file (millis from start of song) and adds a padding of 10 milliseconds  (up/down) to place a note
 					if (!comment&&Float.parseFloat(split(SongLoader.file[curindex],",")[2])>=(millis()-songStartTime) - 10 && Float.parseFloat(split(SongLoader.file[curindex],",")[2])<=(millis()-songStartTime) + 10)
 					{
-							System.out.println("Note place");
 							double pos = Math.floor(1 + Float.parseFloat(split(SongLoader.file[curindex],",")[0]) / (512 / 4));
 							if ((pos - 1) > 3) {
 								System.out.println("Position out of bounds, skipping note");
-								System.out.println("Pos: "+pos);
 								lastindex = curindex;
 								curindex++;
 							} else {
 								notes.add(new Note(this, ((float)pos) - 1).getNote());
-								System.out.println("Time: "+Float.parseFloat(split(SongLoader.file[curindex],",")[2]));
-								System.out.println("Pos: "+pos);
 								lastindex = curindex;
 								curindex++;
 							}
@@ -209,6 +211,7 @@ public class Main extends PApplet{
 					 
 				} catch(ArrayIndexOutOfBoundsException e) {
 				System.out.println("Song has ended");
+				songIsPlaying = false;
 				playsong = false;
 				curindex = 0;
 				selectedButton = b3;
