@@ -1,5 +1,6 @@
 package clik.main;
 
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -9,6 +10,7 @@ import clik.input.SongLoader;
 import clik.input.SoundHandler;
 import clik.obj.Note;
 import clik.obj.Receptor;
+import clik.songhandling.SongParser;
 import processing.core.*;
 
 
@@ -49,6 +51,7 @@ public class Main extends PApplet{
 	Button b2;
 	Button b3;
 	Button b4;
+	SongParser parse;
 
 	
 	public static void main(String[] args) {
@@ -85,9 +88,10 @@ public class Main extends PApplet{
 		b4 = new Button(this,420,200,60,30,"Song",15,20,null,true);
 		selectedButton = b3;
 		
-		//song loader
+		//song inits
 		loader = new SongLoader(this);
-
+		parse = new SongParser();
+		parse.loadSong();
 		
 		//start note generation
 		thread("gen");
@@ -184,11 +188,7 @@ public class Main extends PApplet{
 							
 						}
 						}
-						//System.out.println("Timing: "+ );
-						//if(!songIsPlaying&&!comment&&(Float.parseFloat(split(SongLoader.file[2],",")[2])) + 830>=(millis()-songStartTime)-10&&(Float.parseFloat(split(SongLoader.file[2],",")[2])) + 830<=(millis()-songStartTime) + 10) {
-							//Keyhandler.s.playGameSound();
-							//songIsPlaying = true;
-						//}
+
 					if(!songIsPlaying){
 						delay(830);
 						Keyhandler.s.playGameSound();
