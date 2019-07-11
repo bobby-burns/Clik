@@ -1,5 +1,5 @@
 # Clik
-A guitar hero like game created as a side project by Bobby burns
+A guitar hero like game created as a side project
 
 Current Version: Pre-Alpha 00.1
 
@@ -35,5 +35,5 @@ To use another IDE, import the java files from *Clik/src/clik* and add the **cor
 
 
 ## Copyright
-Copyright <2018> Bobby Burns under MIT License
+Copyright <2018> under MIT License
 https://opensource.org/licenses/MIT
